@@ -193,8 +193,10 @@ int main(int argc, char **argv) {
         while ((g_clearance_tan_test < WALL_FOLLOW_RADIUS) && (g_index_min_dist_ping >= g_index_tangent_left)) {
             ROS_WARN("following left wall...");
             twist_cmd.linear.x = SPEED;
+            double timer = tan(0.5)*WALL_FOLLOW_RADIUS/SPEED;
             ROS_INFO("clearance to left, and clearance ahead left: %f, %f", g_radius_left, g_clearance_tan_test);
             twist_commander.publish(twist_cmd);
+            ros::Duration(timer).sleep();
             ros::spinOnce();
             loop_timer.sleep();
         }
